@@ -2,6 +2,38 @@
 
 The Kotlin compiler allows code attempting to divide by zero to succeed. However, division by zero is not a valid math operation, so we'll encounter errors at runtime. This is a simple plugin to demonstrate detection of division by zero at compile time and preventing compilation from succeeding.
 
+The important code that handles the division by zero check is located in [DivisionByZeroPlugin.kt](create-plugin/src/main/kotlin/io/mattmoore/kotlin/compiler/plugins/divisionbyzero/DivisionByZeroPlugin.kt):
+
+```kotlin
+fun divisionByZeroMatcher(expression: KtBinaryExpression): Boolean =
+        expression.operationReference.textMatches("/")
+                && expression.right?.textMatches("0") ?: false
+
+val Meta.divisionByZero: CliPlugin
+    get() =
+        "Detect division by zero" {
+            meta(
+                    binaryExpression(::divisionByZeroMatcher) {
+                        throw Exception("Division by zero being attempted!")
+                    }
+            )
+        }
+```
+
+The function `divisionByZeroMatcher` will match any AST node that is a `KtBinaryExpression` that is doing division by zero. To demonstrate what's going on, let's examine the statement:
+
+```kotlin
+val result = 5 / 0
+```
+
+The rule `expression.operationReference.textMatches("/")` checks for division. The expression `5 / 0` is contained in `expression`. `operationReference` represents the `/` operation. Finally, the left and right operands are `5` and `0`, respectively. We can get check the text via `textMatches("/")` to make sure we're only looking at division.
+
+The next rule `expression.right?.textMatches("0") ?: false` checks whether the right operand is a `0`.
+
+We don't really care about the left value of `5` in this case, so we don't bother writing a rule for it.
+
+Finally, we can pass the function by reference to Meta's `binaryExpression` function, which will run `divisionByZeroMatcher` and allow us to do something with it in the block. In this case, we're just throwing an exception since we want explicitly want to halt compilation in this example.
+
 ## Run from the command line
 
 ```shell
