@@ -1,4 +1,4 @@
-package io.mattmoore.kotlin.compiler.plugins.helloworld
+package io.mattmoore.kotlin.compiler.plugins.divisionbyzero
 
 import arrow.meta.CliPlugin
 import arrow.meta.Meta
@@ -9,6 +9,6 @@ class MetaPlugin : Meta {
     @ExperimentalContracts
     override fun intercept(ctx: CompilerContext): List<CliPlugin> =
             listOf(
-                    helloWorld
+                    divisionByZero
             )
 }
