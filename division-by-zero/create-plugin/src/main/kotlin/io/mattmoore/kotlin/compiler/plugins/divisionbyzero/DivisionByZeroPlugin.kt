@@ -15,7 +15,7 @@ val Meta.divisionByZero: CliPlugin
         "Detect division by zero" {
             meta(
                     binaryExpression(::divisionByZeroMatcher) {
-                        throw Exception("Division by zero being attempted!")
+                        throw ArithmeticException("/ by zero")
                     }
             )
         }
