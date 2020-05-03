@@ -26,11 +26,23 @@ The function `divisionByZeroMatcher` will match any AST node that is a `KtBinary
 val result = 5 / 0
 ```
 
-The rule `expression.operationReference.textMatches("/")` checks for division. The expression `5 / 0` is contained in `expression`. `operationReference` represents the `/` operation. Finally, the left and right operands are `5` and `0`, respectively. We can get check the text via `textMatches("/")` to make sure we're only looking at division.
+The rule `expression.operationReference.textMatches("/")` checks for division. Here's a table showing each of the properties and what they mean in this context:
 
-The next rule `expression.right?.textMatches("0") ?: false` checks whether the right operand is a `0`.
+|Property                                        |Value  |
+|------------------------------------------------|-------|
+|`expression`                                    |`5 / 0`|
+|`expression.operationReference`                 |`/`    |
+|`expression.operationReference.textMatches("/")`|`true` |
 
-We don't really care about the left value of `5` in this case, so we don't bother writing a rule for it.
+The next rule `expression.right?.textMatches("0")` checks whether the right operand is a `0`. Here's another table showing the properties and what they mean:
+
+|Property                            |Value  |
+|------------------------------------|-------|
+|`expression`                        |`5 / 0`|
+|`expression.right`                  |`0    `|
+|`expression.right?.textMatches("0")`|`true` |
+
+We don't really care about the left operand `5` in this case, so we don't bother writing a rule for it. However, if we wanted to access that portion, we could use `expression.left` to access the `5`.
 
 Finally, we can pass the function by reference to Meta's `binaryExpression` function, which will run `divisionByZeroMatcher` and allow us to do something with it in the block. In this case, we're just throwing an exception since we want explicitly want to halt compilation in this example.
 
