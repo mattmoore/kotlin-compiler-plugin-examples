@@ -1,6 +1,6 @@
 # Hello World
 
-A simple hello world project created by the Arrow Meta team.
+A simple hello world project created by the Arrow Meta team. This is taken from the [Arrow Meta Examples](https://github.com/arrow-kt/arrow-meta-examples) repo. It is included here for educational completeness.
 
 ## Run from the command line
 
