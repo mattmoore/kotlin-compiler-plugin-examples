@@ -48,6 +48,10 @@ We don't really care about the left operand `5` in this case, so we don't bother
 
 Finally, we can pass the function by reference to Meta's `binaryExpression` function, which will run `divisionByZeroMatcher` and allow us to do something with it in the block. In this case, we're just throwing an exception since we want explicitly want to halt compilation in this example.
 
+## A Note on Arrow Meta Matchers
+
+In this example we're using `binaryExpression`, a function provided by Arrow Meta. This matches any `KtBinaryExpression` from the Kotlin compiler, but it is by no means the only matcher that Meta provides. You can see the [full list of matchers on the Arrow Meta site](https://meta.arrow-kt.io/docs/apidocs/compiler-plugin/arrow.meta.quotes/#functions). The source code where these matchers live [is here](https://github.com/arrow-kt/arrow-meta/blob/master/compiler-plugin/src/main/kotlin/arrow/meta/quotes/MetaExtensions.kt).
+
 ## Run from the command line
 
 ```shell
