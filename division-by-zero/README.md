@@ -62,7 +62,7 @@ cd division-by-zero
 Compiling the example code in `use-plugin` above will fail with the following error message:
 
 ```shell
-e: java.lang.Exception: Division by zero being attempted!
+e: java.lang.ArithmeticException: / by zero
 ```
 
 The compiler failed, because our plugin found a division by zero match. This is good. It prevents us from running our example program, where we would instead encounter division by zero at run time.
@@ -90,9 +90,6 @@ It will fail at to run with this exception:
 
 ```shell
 Exception in thread "main" java.lang.ArithmeticException: / by zero
-        at io.mattmoore.kotlin.compiler.plugins.divisionbyzero.DivisionByZeroKt.divByZero(DivisionByZero.kt:5)
-        at io.mattmoore.kotlin.compiler.plugins.divisionbyzero.DivisionByZeroKt.main(DivisionByZero.kt:8)
-        at io.mattmoore.kotlin.compiler.plugins.divisionbyzero.DivisionByZeroKt.main(DivisionByZero.kt)
 ```
 
 ## The Moral of the Story
