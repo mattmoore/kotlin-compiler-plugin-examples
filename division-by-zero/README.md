@@ -26,7 +26,7 @@ The function `divisionByZeroMatcher` will match any AST node that is a `KtBinary
 5 / 0
 ```
 
-This is a binary expression, which means it contains an operation (division) that operates over two operands (5 and 0). The Kotlin compiler represents binary expressions via the class `KtBinaryExpression`.
+This is a binary expression, which means it contains an operation (division) that operates over two operands (5 and 0). The Kotlin compiler represents binary expressions via the class `KtBinaryExpression`. You can view the source code for this class in the [Kotlin compiler](https://github.com/JetBrains/kotlin/blob/master/compiler/psi/src/org/jetbrains/kotlin/psi/KtBinaryExpression.java) or [read the doc for it](https://javadoc.io/static/org.jetbrains.kotlin/kotlin-compiler/1.0.4/org/jetbrains/kotlin/psi/KtBinaryExpression.html).
 
 The rule `expression.operationReference.textMatches("/")` checks for division. Here's a table showing each part and what it means in this context:
 
