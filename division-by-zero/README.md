@@ -23,10 +23,12 @@ val Meta.divisionByZero: CliPlugin
 The function `divisionByZeroMatcher` will match any AST node that is a `KtBinaryExpression` that is doing division by zero. To demonstrate what's going on, let's examine the statement:
 
 ```kotlin
-val result = 5 / 0
+5 / 0
 ```
 
-The rule `expression.operationReference.textMatches("/")` checks for division. Here's a table showing each of the properties and what they mean in this context:
+This is a binary expression, which means it contains an operation (division) that operates over two operands (5 and 0). The Kotlin compiler represents binary expressions via the class `KtBinaryExpression`.
+
+The rule `expression.operationReference.textMatches("/")` checks for division. Here's a table showing each part and what it means in this context:
 
 |Property                                        |Value  |
 |------------------------------------------------|-------|
