@@ -1,0 +1,40 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm"
+    id "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    compileOnly "io.arrow-kt:arrow-annotations:$ARROW_VERSION"
+    // Kotest
+    testImplementation "io.kotest:kotest-runner-junit5-jvm:$KOTEST_VERSION"
+    testImplementation "io.kotest:kotest-assertions-arrow-jvm:$KOTEST_VERSION"
+
+    // To run :create-plugin:shadowJar when building this project
+    api project(path: ':create-plugin', configuration: 'shadow')
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "$JVM_TARGET_VERSION"
+        freeCompilerArgs = ["-Xplugin=${project.rootDir}/create-plugin/build/libs/create-plugin-all.jar"]
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "$JVM_TARGET_VERSION"
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.compileOnly]
+}
+
+jar {
+    manifest {
+        attributes(
+                "Main-Class": "io.mattmoore.kotlin.compiler.plugins.patternmatch.PatternMatchingKt"
+        )
+    }
+}
